@@ -1,45 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEditor } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import Editor from './components/editor'
+import DustButton from './components/dust-button'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  const isOnline = navigator.onLine
+  // const isOnline = navigator.onLine
 
-  if (isOnline) {
-    return (
-      <div className="h-screen grid place-items-center text-center text-gray-600">
-        <p>Please disconnect from the internet to use Dust.</p>
-      </div>
-    )
-  }
+  // if (isOnline) {
+  //   return (
+  //     <div className="h-screen grid place-items-center text-center text-gray-600">
+  //       <p>Please disconnect from the internet to use Dust.</p>
+  //     </div>
+  //   )
+  // }
 
+ const editor = useEditor({
+    extensions: [StarterKit],
+    content: '<p>Let go of what no longer serves you.</p>',
+  })
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="w-screen h-screen p-8 bg-neutral-100 text-gray-800 mx-auto flex flex-col items-center justify-center">
+      {editor && (
+        <div className="max-w-2xl w-full mx-auto">
+          <Editor editor={editor} />
+          <DustButton editor={editor} />
+        </div>
+      )}
+    </div>
   )
 }
 
