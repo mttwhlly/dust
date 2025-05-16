@@ -4,12 +4,10 @@ This too shall pass.
 
 
 ## Usage
-To run the HTTPS server, you need to have Python installed then follow these steps to generate a self-signed certificate and start the server:
+You'll need [Caddy](https://caddyserver.com/) installed.
+
+Then run the following command from `/src` directory to serve the app over HTTPS:
 
 ```bash
-cd src
-
-openssl req -new -x509 -keyout key.pem -out cert.pem -days 365 -nodes
-
-python3 https_server.py
+caddy run
 ```
