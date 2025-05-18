@@ -1,8 +1,8 @@
 import { gsap } from 'https://cdn.skypack.dev/gsap'
 
-if (navigator.onLine) {
-  document.body.innerHTML = `<div style="text-align: center; padding-top: 4rem;"><h1 class="dust-caps">Dust only works offline</h1><span class="dust-caps">✕</span><h2 class="dust-caps">Disconnect and refresh to write</h2></div>`
-}
+// if (navigator.onLine) {
+//   document.body.innerHTML = `<div style="text-align: center; padding-top: 4rem;"><h1 class="dust-caps">Dust only works offline</h1><span class="dust-caps">✕</span><h2 class="dust-caps">Disconnect and refresh to write</h2></div>`
+// }
 
 customElements.define('dust-editor', class extends HTMLElement {
   connectedCallback() {
@@ -15,7 +15,52 @@ customElements.define('dust-editor', class extends HTMLElement {
         <div id="editor" contenteditable="true"></div>
       </div>
     `
-    this.querySelector('#release').addEventListener('click', () => this.dust())
+    
+    // Get the editor element
+    const editor = this.querySelector('#editor');
+    
+    // Focus the editor when the component is connected
+    setTimeout(() => {
+      editor.focus();
+    }, 100);
+    
+    // Add event listeners
+    this.querySelector('#release').addEventListener('click', () => {
+      this.dust();
+      
+      // Re-focus the editor after dust animation starts
+      setTimeout(() => {
+        editor.focus();
+      }, 50);
+    });
+    
+    // Ensure editor keeps focus when clicking elsewhere in the component
+    this.addEventListener('click', (e) => {
+      // Don't interfere if clicking the release button
+      if (e.target.id !== 'release' && e.target !== editor) {
+        editor.focus();
+        
+        // Set cursor at the end of the text
+        const range = document.createRange();
+        const selection = window.getSelection();
+        range.selectNodeContents(editor);
+        range.collapse(false); // collapse to end
+        selection.removeAllRanges();
+        selection.addRange(range);
+        
+        e.preventDefault();
+      }
+    });
+    
+    // Prevent losing focus when user clicks on particles during animation
+    editor.addEventListener('blur', (e) => {
+      // Only prevent blur if it's during an animation
+      if (this.querySelector('.dust-char')) {
+        setTimeout(() => {
+          editor.focus();
+        }, 10);
+      }
+    });
   }
 
   dust() {
@@ -45,6 +90,7 @@ customElements.define('dust-editor', class extends HTMLElement {
       span.style.color = '#333'
       span.style.fontFamily = 'inherit'
       span.style.fontSize = 'inherit'
+      span.style.pointerEvents = 'none' // Prevent particles from capturing clicks
       
       editor.appendChild(span)
       particles.push(span)
@@ -55,6 +101,9 @@ customElements.define('dust-editor', class extends HTMLElement {
       onComplete: () => {
         // Clean up particles after animation
         particles.forEach(span => span.remove())
+        
+        // Make sure editor is still focused after animation completes
+        editor.focus();
       }
     })
     
