@@ -1,8 +1,8 @@
 import { gsap } from 'https://cdn.skypack.dev/gsap'
 
-// if (navigator.onLine) {
-//   document.body.innerHTML = `<div style="text-align: center; padding-top: 4rem;"><h1 class="dust-caps">Dust only works offline</h1><span class="dust-caps">✕</span><h2 class="dust-caps">Disconnect and refresh to write</h2></div>`
-// }
+if (navigator.onLine) {
+  document.body.innerHTML = `<div style="text-align: center; padding-top: 4rem;"><h1 class="dust-caps">Dust only works offline</h1><span class="dust-caps">✕</span><h2 class="dust-caps">Disconnect and refresh to write</h2></div>`
+}
 
 customElements.define('dust-editor', class extends HTMLElement {
   connectedCallback() {
