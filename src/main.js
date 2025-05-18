@@ -1,15 +1,15 @@
 import { gsap } from 'https://cdn.skypack.dev/gsap'
 
-// if (navigator.onLine) {
-//   document.body.innerHTML = `<h1 style="text-align: center; padding-top: 4rem;">Dust only works offline. Disconnect to write.</h1>`
-// }
+if (navigator.onLine) {
+  document.body.innerHTML = `<h1 style="text-align: center; padding-top: 4rem;">Dust only works offline. Disconnect to write.</h1>`
+}
 
 customElements.define('dust-editor', class extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
       <div class="wrapper">
         <button id="release">DUST</button>
-        <div id="editor" contenteditable="true">Write something worth letting go…</div>
+        <div id="editor" contenteditable="true"></div>
       </div>
     `
     this.querySelector('#release').addEventListener('click', () => this.dust())
