@@ -1,11 +1,11 @@
 {
-  "name": "Dust",
-  "short_name": "Dust",
+  "name": "DUST",
+  "short_name": "DUST",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f4f1ee",
   "theme_color": "#aa856c",
-  "description": "An ephemeral offline writing space.",
+  "description": "An ephemeral offline writing space",
   "icons": [
     {
       "src": "/icons/icon-192.png",
