@@ -1,4 +1,5 @@
-const CACHE_NAME = 'dust-cache-v1'
+const CACHE_VERSION = 'v2'
+const CACHE_NAME = `dust-cache-${CACHE_VERSION}`
 const URLS_TO_CACHE = [
   '/',
   '/index.html',
